@@ -1,0 +1,97 @@
+spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+    multipart:
+      enabled: true
+      max-request-size: 50MB
+      max-file-size: 50MB
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  jackson:
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://fscloud-db-mysql:3306/fscloud_opc?useUnicode=true&characterEncoding=UTF-8
+
+liquibase:
+  change-log: classpath:liquibase/index.xml
+  user: ${spring.datasource.username}
+  password: ${spring.datasource.password}
+  url: ${spring.datasource.url}
+
+mybatis:
+  type-aliases-package: com.fscloud.provider.model.domain
+  mapper-locations: classpath:mapper/*.xml,classpath*:sdk/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+mapper:
+  mappers: com.fscloud.core.mybatis.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+security:
+  oauth2:
+    client:
+      clientId: fscloud-client-opc
+      clientSecret: fscloudClientSecret
+      access-token-uri: http://fscloud-gateway:7979/uac/oauth/token
+      user-authorization-uri: http://fscloud-gateway:7979/uac/oauth/authorize
+    resource:
+      user-info-uri: http://fscloud-gateway:7979/uac/user
+      prefer-token-info: false
+      jwt:
+        key-uri: http://fscloud-provider-uac:8000/oauth/token_key
+
+fscloud:
+  enableSqlLogInterceptor: false
+  token:
+    interceptor:
+      enable: true
+  zk:
+    zkAddressList: fscloud-provider-zk:2181
+  qiniu:
+    key:
+      accessKey: yourQiniuAccessKey
+      secretKey: yourQiniuSecretKey
+    oss:
+      privateHost:
+      publicHost:
+      fileMaxSize: 104857600
+  oauth2:
+    jwtSigningKey: fscloud
+    client:
+      id: ${security.oauth2.resource.id}
+      accessTokenUrl: ${security.oauth2.client.access-token-uri}
+      clientId: ${security.oauth2.client.clientId}
+      clientSecret: ${security.oauth2.client.clientSecret}
+      clientAuthenticationScheme: header
+      tokenStore: jwt
+  aliyun:
+    key:
+      accessKeyId: yourAliyunAccessKey
+      accessKeySecret: yourAliyunKeySecret
+    rocketMq:
+      enable: true
+      reliableMessageConsumer: true
+      reliableMessageProducer: false
+      namesrvAddr: fscloud-mq-rocket:9876
+      instanceName: fscloud-provider-opc
+      consumerGroup: CID_OPC
+      producerGroup: PID_OPC
+    sms:
+      signName: 快乐学习网
+      regionId: cn-beijing
+      endpoint:
+      endpointName: cn-beijing
+      product: Dysmsapi
+      domain: dysmsapi.aliyuncs.com
