@@ -40,8 +40,8 @@ spring:
         login-password: admin
   mail:
     host: smtp.163.com
-    username: fscloudTest@163.com
-    password: a123456
+    username: fscloud_admin@163.com
+    password: fscloud20181209
     port: 465
     protocol: smtp
     test-connection: false
@@ -100,8 +100,8 @@ hystrix:
             timeoutInMilliseconds: 20000
 
 info:
-  软件著作权: fscloud快速搭建企业级分布式微服务平台
-  著作登记号: 2018SR320076
+  软件著作权: fscloud 凡讯云平台
+  著作登记号: 20181209
   关于我们: http://fscloud.net
 
 fscloud:
