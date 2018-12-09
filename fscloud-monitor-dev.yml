@@ -12,8 +12,8 @@ spring:
         enabled: true
       notify:
         mail:
-          to: xxxxxxxx@163.com
-          from: fscloudTest@163.com
+          to: fscloud_admin@163.com
+          from: fscloud1983@163.com
       turbine:
         clusters: default
         location: fscloud-monitor
